@@ -5,6 +5,11 @@ const mysql = require("mysql2");
 const express = require("express");
 const app = express();
 
+const path = require("path");
+
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "/views"));
+
 const connection = mysql.createConnection({
   host: "localhost",
   user: "sqlnode",
@@ -25,16 +30,36 @@ let getRandomUser = () => {
 app.get("/", (req, res) => {
   let q = `SELECT count(*) FROM user`;
   try {
-    connection.query(q,  (err, result) => {
+    connection.query(q, (err, result) => {
       if (err) throw err;
-      console.log(result[0]["count(*)"]);
-      res.send("Success")
+      let count = result[0]["count(*)"];
+      res.render("home.ejs", { count });
     });
   } catch (err) {
     console.log(err);
-    res.send("some error in DB")
+    res.send("some error in DB");
   }
 });
+
+app.get("/user", (req, res) => {
+  let q =  `SELECT * FROM user`;
+    try {
+      connection.query(q, (err, users) => {
+        if (err) throw err;
+        res.render("showusers.ejs", {users})
+      });
+    } catch (err) {
+      console.log(err);
+      res.send("some error in DB");
+    }
+})
+
+app.get("/user/:id/edit", (req, res) => {
+  let {id} = req.params;
+  let  q = `SELECT * FROM user WHERE ID = ${id}`
+  console.log(id)
+  res.render("edit.ejs")
+})
 
 app.listen("8080", () => {
   console.log("port is listen on 8080...");
