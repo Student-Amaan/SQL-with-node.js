@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>edit table</title>
-</head>
-<body>
-    <h1>Edit the table row</h1>
-</body>
+  </head>
+  <body>
+    <form method="post" action="/user/<%= user.id  %>">
+      <h1>Edit the table row <%= user.email %></h1>
+      <textarea name="username"><%= user.username  %></textarea>
+      <input type="password" name=" password " placeholder="enter password" />
+      <button>edit</button>
+    </form>
+  </body>
 </html>

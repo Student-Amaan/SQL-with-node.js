@@ -16,8 +16,10 @@
         <td> <%=user.username%></td>
         <td><%=user.email%></td>
         <td>
-        <form method="GET" action="/user/<%= user.id %>/edit"></form>
-        <button>Edit username</button>
+        <form method="GET" action="/user/<%= user.id %>/edit">
+            <button>Edit username</button>
+        </form>
+        
         </td>
     </tr>
 <% } %>

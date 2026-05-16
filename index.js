@@ -42,24 +42,32 @@ app.get("/", (req, res) => {
 });
 
 app.get("/user", (req, res) => {
-  let q =  `SELECT * FROM user`;
-    try {
-      connection.query(q, (err, users) => {
-        if (err) throw err;
-        res.render("showusers.ejs", {users})
-      });
-    } catch (err) {
-      console.log(err);
-      res.send("some error in DB");
-    }
-})
+  let q = `SELECT * FROM user`;
+  try {
+    connection.query(q, (err, users) => {
+      if (err) throw err;
+      res.render("showusers.ejs", { users });
+    });
+  } catch (err) {
+    console.log(err);
+    res.send("some error in DB");
+  }
+});
 
 app.get("/user/:id/edit", (req, res) => {
-  let {id} = req.params;
-  let  q = `SELECT * FROM user WHERE ID = ${id}`
-  console.log(id)
-  res.render("edit.ejs")
-})
+  let { id } = req.params;
+  let q = `SELECT * FROM user WHERE ID = '${id}'`;
+  try {
+    connection.query(q, (err, result) => {
+      if (err) throw err;
+      let user = result[0];
+      res.render("edit.ejs", { user });
+    });
+  } catch (err) {
+    console.log(err);
+    res.send("some error in DB");
+  }
+});
 
 app.listen("8080", () => {
   console.log("port is listen on 8080...");
