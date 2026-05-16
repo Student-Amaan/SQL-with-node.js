@@ -4,9 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>edit table</title>
+    <link rel="stylesheet" href="/edit.css">
   </head>
   <body>
-    <form method="post" action="/user/<%= user.id  %>">
+    <form method="post" action="/user/<%= user.id  %>?_method=PATCH">
       <h1>Edit the table row <%= user.email %></h1>
       <textarea name="username"><%= user.username  %></textarea>
       <input type="password" name=" password " placeholder="enter password" />
